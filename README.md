@@ -8,5 +8,5 @@ This fork exists just to make it easy to include in Java projects. Just add the 
 	<dependency>
 		<groupId>com.danielflower.apprunner</groupId>
 		<artifactId>javasysmon</artifactId>
-		<version>0.3.5.1</version>
+		<version>0.3.5.0</version>
 	</dependency>
