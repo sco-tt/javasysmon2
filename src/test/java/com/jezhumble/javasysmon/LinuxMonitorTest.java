@@ -3,6 +3,8 @@ package com.jezhumble.javasysmon;
 import junit.framework.Assert;
 import junit.framework.TestCase;
 
+import java.io.File;
+
 public class LinuxMonitorTest extends TestCase {
 
     public void testShouldRetrieveTotalMemory() {
@@ -54,7 +56,9 @@ public class LinuxMonitorTest extends TestCase {
     }
 
     public void testShouldReturnTheProcessTable() {
-        LinuxMonitor linuxMonitor = new LinuxMonitor();
-        Assert.assertNotNull(linuxMonitor.processTable());
+        if (File.separator.equals("/")) {
+            LinuxMonitor linuxMonitor = new LinuxMonitor();
+            Assert.assertNotNull(linuxMonitor.processTable());
+        }
     }
 }
