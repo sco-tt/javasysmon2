@@ -193,6 +193,16 @@ public class JavaSysMon implements Monitor {
     }
 
     /**
+     * Gets the physical memory installed, and the amount free + buffers/cache.
+     *
+     * @return An object containing the amount of physical
+     * memory installed, and the amount free + buffers/cache.
+     */
+    public MemoryStats physicalWithBuffersAndCached() {
+        return monitor.physicalWithBuffersAndCached();
+    }
+
+    /**
      * Gets the amount of swap available to the operating system,
      * and the amount that is free.
      *

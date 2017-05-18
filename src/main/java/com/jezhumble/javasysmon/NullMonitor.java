@@ -26,6 +26,10 @@ class NullMonitor implements Monitor {
         return null;
     }
 
+    public MemoryStats physicalWithBuffersAndCached(){
+        return null;
+    }
+
     public MemoryStats swap() {
         return null;
     }

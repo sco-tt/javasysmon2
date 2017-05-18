@@ -28,6 +28,7 @@ class MacOsXMonitor implements Monitor {
     public native int currentPid();
     public native CpuTimes cpuTimes();
     public native MemoryStats physical();
+    public MemoryStats physicalWithBuffersAndCached(){ throw new UnsupportedOperationException("No implementation for " + osName()); }
     public native MemoryStats swap();
     public native ProcessInfo[] processTable();
     public native void killProcess(int pid);

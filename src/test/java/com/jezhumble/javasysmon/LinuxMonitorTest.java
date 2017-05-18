@@ -19,6 +19,12 @@ public class LinuxMonitorTest extends TestCase {
         Assert.assertEquals((long)195608, freeMemory/1024);
     }
 
+    public void testShouldRetrieveFreeMemoryWithCachedAndBuffer() {
+        LinuxMonitor monitor = new LinuxMonitor(new StubFileUtils());
+        final long freeMemory = monitor.physicalWithBuffersAndCached().getFreeBytes();
+        Assert.assertEquals((long)196038, freeMemory/1024);
+    }
+
     public void testShouldRetrieveTotalSwap() {
         LinuxMonitor monitor = new LinuxMonitor(new StubFileUtils());
         final long totalSwap = monitor.swap().getTotalBytes();
