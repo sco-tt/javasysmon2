@@ -19,6 +19,10 @@ class LinuxMonitor implements Monitor {
             Pattern.compile("MemTotal:\\s+(\\d+) kB", Pattern.MULTILINE);
     private static final Pattern FREE_MEMORY_PATTERN =
             Pattern.compile("MemFree:\\s+(\\d+) kB", Pattern.MULTILINE);
+    private static final Pattern BUFFERS_PATTERN =
+            Pattern.compile("Buffers:\\s+(\\d+) kB", Pattern.MULTILINE);
+    private static final Pattern CACHED_PATTERN =
+            Pattern.compile("Cached:\\s+(\\d+) kB", Pattern.MULTILINE);
     private static final Pattern TOTAL_SWAP_PATTERN =
             Pattern.compile("SwapTotal:\\s+(\\d+) kB", Pattern.MULTILINE);
     private static final Pattern FREE_SWAP_PATTERN =
@@ -35,6 +39,8 @@ class LinuxMonitor implements Monitor {
             Pattern.compile("([\\d]*).*");
     private static final Pattern DISTRIBUTION =
             Pattern.compile("DISTRIB_DESCRIPTION=\"(.*)\"", Pattern.MULTILINE);
+    public static final String PROC_MEMINFO = "/proc/meminfo";
+    public static final int TO_BYTE = 1024;
 
     private FileUtils fileUtils;
     private int userHz = 100; // Shouldn't be hardcoded. See below.
@@ -66,18 +72,28 @@ class LinuxMonitor implements Monitor {
     }
 
     public MemoryStats physical() {
-        String totalMemory = fileUtils.runRegexOnFile(TOTAL_MEMORY_PATTERN, "/proc/meminfo");
-        long total = Long.parseLong(totalMemory) * 1024;
-        String freeMemory = fileUtils.runRegexOnFile(FREE_MEMORY_PATTERN, "/proc/meminfo");
-        long free = Long.parseLong(freeMemory) * 1024;
+        String totalMemory = fileUtils.runRegexOnFile(TOTAL_MEMORY_PATTERN, PROC_MEMINFO);
+        long total = Long.parseLong(totalMemory) * TO_BYTE;
+        String freeMemory = fileUtils.runRegexOnFile(FREE_MEMORY_PATTERN, PROC_MEMINFO);
+        long free = Long.parseLong(freeMemory) * TO_BYTE;
+        return new MemoryStats(free, total);
+    }
+
+    public MemoryStats physicalWithBuffersAndCached() {
+        String totalMemory = fileUtils.runRegexOnFile(TOTAL_MEMORY_PATTERN, PROC_MEMINFO);
+        long total = Long.parseLong(totalMemory) * TO_BYTE;
+        String freeMemory = fileUtils.runRegexOnFile(FREE_MEMORY_PATTERN, PROC_MEMINFO);
+        String buffers = fileUtils.runRegexOnFile(BUFFERS_PATTERN, PROC_MEMINFO);
+        String cached = fileUtils.runRegexOnFile(CACHED_PATTERN, PROC_MEMINFO);
+        long free = (Long.parseLong(freeMemory) + Long.parseLong(buffers) + Long.parseLong(cached)) * TO_BYTE;
         return new MemoryStats(free, total);
     }
 
     public MemoryStats swap() {
-        String totalMemory = fileUtils.runRegexOnFile(TOTAL_SWAP_PATTERN, "/proc/meminfo");
-        long total = Long.parseLong(totalMemory) * 1024;
-        String freeMemory = fileUtils.runRegexOnFile(FREE_SWAP_PATTERN, "/proc/meminfo");
-        long free = Long.parseLong(freeMemory) * 1024;
+        String totalMemory = fileUtils.runRegexOnFile(TOTAL_SWAP_PATTERN, PROC_MEMINFO);
+        long total = Long.parseLong(totalMemory) * TO_BYTE;
+        String freeMemory = fileUtils.runRegexOnFile(FREE_SWAP_PATTERN, PROC_MEMINFO);
+        long free = Long.parseLong(freeMemory) * TO_BYTE;
         return new MemoryStats(free, total);
     }
 
