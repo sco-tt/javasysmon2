@@ -13,4 +13,41 @@ https://github.com/lliuxiangke0210/javasysmon/commit/3aa4442fbcbc204ce533381d227
 
 4) [Returning free memory in Linux even with cached and buffer values](https://github.com/danielflower/javasysmon/commit/869bad136a30a88ec9812b6a50adaf41753a34a5)
 
+**Maven**
+
+``` XML
+<repositories>
+		<repository>
+		    <id>jitpack.io</id>
+		    <url>https://jitpack.io</url>
+		</repository>
+</repositories>
+```
+
+``` XML
+	<dependency>
+	    <groupId>com.github.goxr3plus</groupId>
+	    <artifactId>javasysmon2</artifactId>
+	    <version>8.0.0</version>
+	</dependency>
+```
+
+**Gradle**
+
+``` JAVA
+allprojects {
+		repositories {
+			...
+			maven { url 'https://jitpack.io' }
+		}
+	}
+```
+
+``` JAVA
+dependencies {
+	        implementation 'com.github.goxr3plus:javasysmon2:8.0.0'
+	}
+```
+
+
 
