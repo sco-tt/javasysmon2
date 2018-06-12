@@ -43,7 +43,7 @@ allprojects {
 	}
 ```
 
-``` SCALA
+``` JAVA
 dependencies {
 	        implementation 'com.github.goxr3plus:javasysmon2:8.0.0'
 	}
