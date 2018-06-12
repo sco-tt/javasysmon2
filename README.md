@@ -34,7 +34,7 @@ https://github.com/lliuxiangke0210/javasysmon/commit/3aa4442fbcbc204ce533381d227
 
 **Gradle**
 
-``` JAVA
+``` SCALA
 allprojects {
 		repositories {
 			...
@@ -43,7 +43,7 @@ allprojects {
 	}
 ```
 
-``` JAVA
+``` SCALA
 dependencies {
 	        implementation 'com.github.goxr3plus:javasysmon2:8.0.0'
 	}
